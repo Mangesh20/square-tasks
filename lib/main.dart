@@ -14,6 +14,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool _isDarkTheme = false;
+  bool _showLifecycleDemo = true;
 
   void _toggleDarkTheme() {
     setState(() {
@@ -31,7 +32,34 @@ class _MyAppState extends State<MyApp> {
           appBar: AppBar(
             title: const Text('Stateful Widget Lifecycle Demo'),
           ),
-          body: LifecycleDemo(count: 0),
+          body: Column(
+            children: [
+              Expanded(
+                child: _showLifecycleDemo
+                    ? LifecycleDemo(count: 0)
+                    : const Center(
+                        child: Text('LifecycleDemo is hidden'),
+                      ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Toggle Widget'),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Switch(
+                    value: _showLifecycleDemo,
+                    onChanged: (value) {
+                      setState(() {
+                        _showLifecycleDemo = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
           floatingActionButton: FloatingActionButton(
             onPressed: _toggleDarkTheme,
             child: const Icon(
